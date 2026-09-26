@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Mini Companion</title>
+<meta name="description" content="What Mini Companion does with your data: everything you create stays on your iPhone, and nothing is sent anywhere unless you choose to turn on anonymous analytics and crash reports.">
+<meta name="theme-color" content="#14110F">
+<meta property="og:title" content="Mini Companion — Privacy Policy">
+<meta property="og:description" content="Everything you create stays on your iPhone. Analytics and crash reports are off unless you turn them on.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/app-icon.png">
+<link rel="apple-touch-icon" href="assets/app-icon.png">
+<style>
+  /* Tokens, base, nav and footer are kept identical to index.html rather than
+     extracted into a shared stylesheet. Two pages is not enough to earn a third
+     file in the published tree, but that does mean index.html is the source of
+     truth for these values — change them there first. */
+
+  /* ---------- tokens ---------- */
+  :root{
+    --bg:#FBF8F5;
+    --bg-alt:#F3EEE8;
+    --surface:#FFFFFF;
+    --ink:#191411;
+    --ink-soft:#4A423C;
+    --muted:#6F655D;
+    --line:rgba(25,20,17,.11);
+    --line-strong:rgba(25,20,17,.18);
+    --accent:#C8471F;
+    --accent-ink:#FFFFFF;
+    --accent-soft:rgba(200,71,31,.10);
+    --teal:#1F6F6B;
+    --teal-soft:rgba(31,111,107,.10);
+    --shadow:0 1px 2px rgba(25,20,17,.05), 0 12px 32px -12px rgba(25,20,17,.16);
+    --radius:16px;
+    --maxw:840px;
+    --nav-h:64px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#131010;
+      --bg-alt:#1A1615;
+      --surface:#201B19;
+      --ink:#F6F1EC;
+      --ink-soft:#D6CDC6;
+      --muted:#A3988F;
+      --line:rgba(246,241,236,.12);
+      --line-strong:rgba(246,241,236,.2);
+      --accent:#FF7A4F;
+      --accent-ink:#241009;
+      --accent-soft:rgba(255,122,79,.14);
+      --teal:#4EC5BC;
+      --teal-soft:rgba(78,197,188,.13);
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+    }
+  }
+
+  /* ---------- base ---------- */
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 16px); -webkit-text-size-adjust:100%}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none !important; transition:none !important} }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font:400 17px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{margin:0; line-height:1.15; letter-spacing:-.022em; font-weight:640}
+  h1{font-size:clamp(2rem,5vw,2.9rem); letter-spacing:-.03em}
+  h2{font-size:clamp(1.3rem,2.6vw,1.6rem)}
+  h3{font-size:1.02rem; letter-spacing:-.012em}
+  p{margin:0}
+  a{color:inherit}
+  img,svg{max-width:100%; display:block}
+  ::selection{background:var(--accent); color:var(--accent-ink)}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+
+  .wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:24px}
+  .eyebrow{
+    font-size:.74rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:14px;
+  }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50; height:var(--nav-h);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .2s ease;
+  }
+  header.nav[data-stuck="true"]{border-bottom-color:var(--line)}
+  .nav-inner{max-width:var(--maxw); margin-inline:auto; height:100%; padding-inline:24px;
+    display:flex; align-items:center; gap:28px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:660; letter-spacing:-.02em;
+    text-decoration:none; font-size:1.02rem; flex:none}
+  .brand .mark{width:28px; height:28px; border-radius:9px; flex:none; box-shadow:var(--shadow);
+    object-fit:cover; background:var(--surface)}
+  .back{
+    margin-left:auto; text-decoration:none; color:var(--muted); font-size:.92rem; font-weight:500;
+    padding:7px 12px; border-radius:9px; white-space:nowrap;
+    transition:color .16s ease, background .16s ease;
+  }
+  .back:hover{color:var(--ink); background:var(--bg-alt)}
+  @media (max-width:560px){ .nav-inner{gap:0; padding-inline:16px} }
+
+  /* ---------- page head ---------- */
+  .page-head{padding:clamp(44px,7vw,80px) 0 clamp(28px,4vw,40px); position:relative; overflow:hidden}
+  .page-head::before{
+    content:""; position:absolute; inset:-60% 0 auto -10%; height:150%; z-index:0; pointer-events:none;
+    background:radial-gradient(42rem 26rem at 14% 4%, var(--accent-soft), transparent 62%);
+  }
+  .page-head .wrap{position:relative; z-index:1}
+  .page-head h1{max-width:22ch}
+  .updated{margin-top:18px; font-size:.87rem; color:var(--muted)}
+
+  /* ---------- at a glance ---------- */
+  .glance{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px 24px; box-shadow:var(--shadow); margin-top:34px;
+  }
+  .glance h2{font-size:1.06rem; letter-spacing:-.012em; margin-bottom:16px}
+  .glance ul{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+  .glance li{display:flex; gap:12px; align-items:flex-start; font-size:.96rem; color:var(--ink-soft)}
+  .glance svg{width:19px; height:19px; flex:none; margin-top:3px; color:var(--accent);
+    stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round}
+
+  /* ---------- prose ---------- */
+  .prose{padding:clamp(20px,4vw,40px) 0 clamp(56px,8vw,96px); max-width:none}
+  .prose section{padding:0; margin-top:clamp(36px,5vw,52px); scroll-margin-top:calc(var(--nav-h) + 16px)}
+  .prose section:first-child{margin-top:0}
+  .prose h2{margin-bottom:16px}
+  .prose h3{margin:26px 0 8px}
+  .prose p{margin-top:14px; color:var(--ink-soft)}
+  .prose p:first-of-type{margin-top:0}
+  .prose ul{margin:16px 0 0; padding-left:0; list-style:none; display:grid; gap:11px}
+  .prose ul li{
+    position:relative; padding-left:20px; color:var(--ink-soft); font-size:.97rem;
+  }
+  .prose ul li::before{
+    content:""; position:absolute; left:2px; top:.62em; width:6px; height:6px; border-radius:99px;
+    background:var(--accent); opacity:.65;
+  }
+  .prose ul li b{color:var(--ink); font-weight:600}
+  .prose a[href^="http"],.prose a[href^="mailto"]{
+    color:var(--ink); text-decoration:none; border-bottom:1.5px solid var(--accent); padding-bottom:1px;
+  }
+  .prose a[href^="http"]:hover,.prose a[href^="mailto"]:hover{color:var(--accent)}
+  code{
+    font:500 .88em/1.4 ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+    background:var(--bg-alt); border:1px solid var(--line); border-radius:6px; padding:1px 6px;
+  }
+
+  /* ---------- notice ---------- */
+  .notice{
+    border:1px solid var(--line-strong); border-left:3px solid var(--accent);
+    border-radius:12px; background:var(--accent-soft); padding:20px 22px; margin-top:20px;
+  }
+  .notice p{margin-top:10px; color:var(--ink-soft)}
+  .notice p:first-child{margin-top:0}
+  .notice strong{color:var(--ink)}
+  .notice.calm{border-left-color:var(--teal); background:var(--teal-soft)}
+
+  /* ---------- table ---------- */
+  .tbl{margin-top:20px; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--surface)}
+  .tbl .row{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.55fr); gap:0; border-top:1px solid var(--line)}
+  .tbl .row:first-child{border-top:0}
+  .tbl .row > *{padding:13px 16px; font-size:.92rem}
+  .tbl .row > :first-child{font-weight:600; color:var(--ink); background:var(--bg-alt)}
+  .tbl .row > :last-child{color:var(--muted)}
+  @media (max-width:560px){
+    .tbl .row{grid-template-columns:1fr}
+    .tbl .row > :first-child{padding-bottom:4px; background:transparent}
+    .tbl .row > :last-child{padding-top:0}
+  }
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line); padding:36px 0 48px; background:var(--bg-alt)}
+  .foot{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;
+    font-size:.86rem; color:var(--muted)}
+  .foot a{color:var(--muted); text-decoration:none}
+  .foot a:hover{color:var(--ink)}
+  .foot nav{display:flex; gap:20px; flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <img class="mark" src="assets/app-icon.png" width="28" height="28" alt="" aria-hidden="true">
+      Mini&nbsp;Companion
+    </a>
+    <a class="back" href="index.html">← Back to the app</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="eyebrow">Privacy</div>
+      <h1>What Mini Companion does with your data</h1>
+      <p class="updated">Last updated 26 September 2026 · applies to Mini Companion 1.0 for iPhone, currently distributed as an open beta through TestFlight.</p>
+
+      <div class="glance">
+        <h2>The short version</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Everything you create — projects, photos, paints, recipes, stash, notes — <b>stays on your iPhone</b>. There is no account and no server to send it to.</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Anonymous <b>usage analytics and crash reports</b> can be sent to Google Firebase — but only if you turn them on. They are <b>off until you do</b>, and the app asks once, on first launch.</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>If you do turn them on, they carry screen names, counts and yes/no flags — <b>never</b> the names of your projects or paints, your notes, or your photos.</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Nothing is sold, and nothing is used to advertise to you or to track you across other apps.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="prose">
+    <div class="wrap">
+
+      <section id="who">
+        <h2>Who is behind this app</h2>
+        <p>Mini Companion is made by Giuliano Galea, an independent developer. There is no company, no team and no third party with access to anything described here. For any question about this policy, or about your data, email <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20privacy">giuliano.galea@icloud.com</a>.</p>
+      </section>
+
+      <section id="on-device">
+        <h2>What stays on your device</h2>
+        <p>Everything you put into the app. Mini Companion has no account, no sign-in and no backend, so your painting records have nowhere to go except your own phone:</p>
+        <ul>
+          <li><b>Projects</b> — names, states, the full history of state changes and their dates.</li>
+          <li><b>Photos</b> — every picture you attach to a project, plus the thumbnails generated from them.</li>
+          <li><b>Paints</b> — your inventory, pot levels, and any custom paints you create from a recipe.</li>
+          <li><b>Recipes</b> — your mixes, their ingredients and ratios.</li>
+          <li><b>Stash</b> — the models you have not started yet.</li>
+          <li><b>Notes</b> — anything you type anywhere in the app.</li>
+          <li><b>Settings</b> — your notification preferences, your low-stock threshold, and the two privacy choices below.</li>
+        </ul>
+        <p>Technically, this lives in the app's own private storage: a database file and a photo folder inside the app's Application Support directory, which only Mini Companion can read. Nothing there is uploaded, backed up to me, or shared with anyone.</p>
+        <div class="notice calm">
+          <p><strong>Deleting the app deletes all of it.</strong> Because there is no copy anywhere else, removing Mini Companion from your iPhone erases every project, photo, paint and recipe permanently. If any of it matters to you, export it first — and if your iPhone is included in an iCloud or computer backup, your device backup will contain the app's data in the same way it contains any other app's.</p>
+        </div>
+      </section>
+
+      <section id="sent">
+        <h2>What is sent off your device</h2>
+        <p>Two things, both from Google's Firebase toolkit, and neither of which happens unless you agree to it. Nothing else in the app makes any network request at all.</p>
+
+        <div class="notice">
+          <p><strong>Nothing is sent unless you say yes.</strong> Both switches start off. The first time you open Mini Companion it asks you, once, whether you are willing to share anonymous usage data and crash reports — because the app is free, and that feedback is most of what tells me which parts are worth improving and which features are worth building next.</p>
+          <p><strong>Saying no is a perfectly normal answer.</strong> Nothing about the app changes if you decline, no feature is held back, and you will not be asked again.</p>
+          <p>You can change your mind either way, at any time, in <strong>Settings → Privacy</strong>. There are two independent switches — <em>Share Analytics</em> and <em>Send Crash Reports</em> — so you can allow one and refuse the other.</p>
+        </div>
+
+        <p>What follows describes what each one sends <em>when it is switched on</em>. While it is off, none of it leaves your phone.</p>
+
+        <h3>Usage analytics (Firebase Analytics)</h3>
+        <p>This tells me which parts of the app actually get used, so I know what is worth improving. What it sends:</p>
+        <ul>
+          <li><b>Screen names</b> — that someone opened, for example, the paints list, a project's detail screen or the settings screen.</li>
+          <li><b>Actions, as counts and flags</b> — that a recipe was added and how many ingredients it had; that a stash item was added and whether it had a photo; that a project was exported. Numbers and yes/no values only.</li>
+          <li><b>A Firebase app instance identifier</b>, generated by Firebase for this installation of the app. It is not your name, your email address, your Apple Account or your device's advertising identifier, and it is reset when analytics is switched off or the app is reinstalled.</li>
+          <li><b>Standard device information</b> collected automatically by Firebase, such as device model, iOS version, language and country.</li>
+        </ul>
+        <p>What it never sends: the name of any project, paint, recipe or stash item; any note or text you typed; any photo; or any count of your photos or your collection. This is a deliberate constraint on how the app is built, not a promise about intent — the events are defined so that there is no field for that information to travel in.</p>
+
+        <h3>Crash reports (Firebase Crashlytics)</h3>
+        <p>When the app crashes, this sends me a report so the bug can be found and fixed. It contains the technical stack trace, the device model and iOS version, and a trail of the screens visited just beforehand. That trail is made of screen and route names and internal record identifiers — again, never the names of your projects or paints, your notes or your photos.</p>
+
+        <h3>Turning them on and off again</h3>
+        <p>Both switches take effect immediately and are remembered between launches. Turning one on starts collection from that moment — it cannot send anything from before, because nothing was recorded. Turning one off stops it again:</p>
+        <ul>
+          <li><b>Share Analytics off</b> — no further events or screen views are sent, and Firebase is instructed to reset the analytics data held for this installation.</li>
+          <li><b>Send Crash Reports off</b> — no further reports are sent, and any report already queued on the device but not yet uploaded is deleted rather than sent.</li>
+        </ul>
+      </section>
+
+      <section id="not">
+        <h2>What the app does not do</h2>
+        <ul>
+          <li><b>No tracking across apps or websites.</b> The app does not use Apple's advertising identifier (IDFA), never shows the "Ask App Not To Track" prompt, and links nothing about you to data from other companies.</li>
+          <li><b>No advertising.</b> There are no ads and no ad networks in the app.</li>
+          <li><b>No selling or sharing.</b> Your data is not sold, rented or handed to anyone. Nobody but me sees the analytics and crash reports, and what they contain is described above.</li>
+          <li><b>No payments.</b> The app is free, with no subscriptions and no in-app purchases, so it holds no payment or billing information of any kind.</li>
+          <li><b>No contacts, location or health data.</b> The app never asks for them and cannot read them.</li>
+        </ul>
+      </section>
+
+      <section id="permissions">
+        <h2>Permissions the app asks for, and why</h2>
+        <div class="tbl">
+          <div class="row"><div>Photo library</div><div>Only when you add a photo to a project. Selection happens in Apple's own picker, which hands the app the one photo you chose and nothing else — the app never gets access to your library.</div></div>
+          <div class="row"><div>Camera</div><div>Only if you choose to take a new photo for a project. Photos taken this way are saved into the app's own storage.</div></div>
+          <div class="row"><div>Notifications</div><div>Only to remind you that a project has gone untouched. Entirely optional, and adjustable or switchable off per state in Settings.</div></div>
+        </div>
+        <p>All three are declined-by-default and requested only at the moment they are needed. Declining any of them leaves the rest of the app working.</p>
+      </section>
+
+      <section id="notifications">
+        <h2>Reminders are created on your phone</h2>
+        <p>The staleness reminders are <em>local</em> notifications: they are scheduled by the app on your device and delivered by iOS. There is no push server, nothing is sent to me to trigger them, and their contents — a project's state and an internal identifier used to open the right project when you tap — never leave the device.</p>
+      </section>
+
+      <section id="sharing">
+        <h2>Sharing and exports</h2>
+        <p>When you export a project, the app writes a PDF into a temporary folder and hands it to the standard iOS share sheet. Where it goes from there is entirely your choice — Messages, Mail, Files, another app. Mini Companion does not upload it anywhere and has no way of knowing what you did with it. Temporary export files are cleared out as the app runs.</p>
+        <p>The one thing recorded about an export is the anonymous analytics event noting that an export happened and in what format. It contains nothing about the project itself.</p>
+      </section>
+
+      <section id="beta">
+        <h2>While the app is in open beta</h2>
+        <p>Mini Companion is currently distributed through <b>TestFlight</b>, Apple's beta testing service. That adds Apple to the picture for as long as the beta lasts:</p>
+        <ul>
+          <li>Apple handles the beta distribution, and the email address of your Apple Account is used to enrol you as a tester. I can see the email addresses of testers who joined and the number of installs.</li>
+          <li>If you send feedback through TestFlight — including a screenshot taken inside the app — it goes to Apple and is shown to me, together with your device model and iOS version. That feedback is sent only when you choose to send it.</li>
+          <li>Apple also collects its own installation and crash information for TestFlight builds, independently of the Crashlytics switch described above.</li>
+        </ul>
+        <p>Apple's handling of all of that is governed by <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>, not by this one. A screenshot you attach to feedback may show your own projects and photos, so it is worth a glance before you send it.</p>
+      </section>
+
+      <section id="third-parties">
+        <h2>The third parties involved</h2>
+        <div class="tbl">
+          <div class="row"><div>Google (Firebase)</div><div>Receives the anonymous analytics and crash reports described above, and only while the corresponding switch is on. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's privacy information</a> and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</div></div>
+          <div class="row"><div>Apple</div><div>Distributes the app and, during the beta, handles TestFlight as described above. See <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</div></div>
+        </div>
+        <p>That is the complete list. The app talks to no other service.</p>
+      </section>
+
+      <section id="retention">
+        <h2>How long things are kept</h2>
+        <ul>
+          <li><b>Your painting records</b> stay on your device until you delete them or delete the app. I never hold a copy, so I cannot delete them for you and cannot recover them for you either.</li>
+          <li><b>Analytics</b> are retained by Firebase under Google's retention settings for this project, and are aggregated — they are not a record of an identifiable person.</li>
+          <li><b>Crash reports</b> are kept by Crashlytics for as long as they are useful for diagnosing the bug, and are deleted on Google's own schedule.</li>
+        </ul>
+      </section>
+
+      <section id="children">
+        <h2>Children</h2>
+        <p>The app is rated 4+ and is suitable for all ages, but it is not directed at children specifically and it does not knowingly collect personal information from anyone, of any age.</p>
+      </section>
+
+      <section id="choices">
+        <h2>Your choices and your rights</h2>
+        <p>The practical controls are all in your hands, and the default is already the private one:</p>
+        <ul>
+          <li><b>To share nothing at all</b>, do nothing. Both switches are off until you turn them on, so declining the question on first launch — or ignoring it — leaves the app sending no telemetry whatsoever.</li>
+          <li><b>To start or stop the analytics</b>, use <em>Share Analytics</em> in Settings → Privacy.</li>
+          <li><b>To start or stop the crash reports</b>, use <em>Send Crash Reports</em> in the same place.</li>
+          <li><b>To stop the reminders</b>, turn them off in Settings → Notifications, or in iOS Settings.</li>
+          <li><b>To erase everything the app holds</b>, delete the app from your iPhone.</li>
+        </ul>
+        <p>If you are in the European Union, the United Kingdom or another place with data protection law of this kind, you have rights over your personal data — including access, correction, erasure and objection. Because the analytics and crash reporting are off until you switch them on, nothing is collected on the basis of anything other than your own consent, and withdrawing it is the same two switches. Two further honest notes: everything you create never leaves your device, so there is no copy for me to send you or delete; and the telemetry is not linked to your identity, so I have no way to find "your" records among it in order to act on a request. What I can do is answer any question about what the app does, and act on anything within reach. Write to <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20privacy">giuliano.galea@icloud.com</a> and you will get a reply.</p>
+      </section>
+
+      <section id="changes">
+        <h2>Changes to this policy</h2>
+        <p>If what the app collects changes, this page changes with it and the date at the top moves. Anything significant will also be mentioned in the app's What's New screen, so you do not have to come back here to check. The date at the top is the honest record of when this was last true.</p>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Questions, corrections, or something here that does not match what you observed in the app — all worth hearing about. Email <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20privacy">giuliano.galea@icloud.com</a>.</p>
+      </section>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="year">2026</span> Giuliano Galea · Mini Companion</span>
+    <nav>
+      <a href="index.html">The app</a>
+      <a href="index.html#faq">FAQ</a>
+      <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Border on the nav once the page has scrolled — same behaviour as index.html.
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.dataset.stuck = window.scrollY > 8;
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+</script>
+
+</body>
+</html>

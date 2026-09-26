@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mini Companion — the painting log for your miniatures</title>
+<meta name="description" content="Mini Companion tracks every miniature you paint: progress from sprue to finished, a photo log per stage, your paint inventory, your mixing recipes, your stash, and a shareable PDF at the end.">
+<meta name="theme-color" content="#14110F">
+<meta property="og:title" content="Mini Companion">
+<meta property="og:description" content="The painting log for your miniatures — progress, photos, paints, mixing recipes and stash, in one app.">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/app-icon.png">
+<link rel="apple-touch-icon" href="assets/app-icon.png">
+<style>
+  /* ---------- tokens ---------- */
+  :root{
+    --bg:#FBF8F5;
+    --bg-alt:#F3EEE8;
+    --surface:#FFFFFF;
+    --ink:#191411;
+    --ink-soft:#4A423C;
+    --muted:#6F655D;
+    --line:rgba(25,20,17,.11);
+    --line-strong:rgba(25,20,17,.18);
+    --accent:#C8471F;
+    --accent-ink:#FFFFFF;
+    --accent-soft:rgba(200,71,31,.10);
+    --teal:#1F6F6B;
+    --shadow:0 1px 2px rgba(25,20,17,.05), 0 12px 32px -12px rgba(25,20,17,.16);
+    --shadow-lg:0 2px 4px rgba(25,20,17,.06), 0 32px 64px -24px rgba(25,20,17,.28);
+    --radius:16px;
+    --maxw:1120px;
+    --nav-h:64px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#131010;
+      --bg-alt:#1A1615;
+      --surface:#201B19;
+      --ink:#F6F1EC;
+      --ink-soft:#D6CDC6;
+      --muted:#A3988F;
+      --line:rgba(246,241,236,.12);
+      --line-strong:rgba(246,241,236,.2);
+      --accent:#FF7A4F;
+      --accent-ink:#241009;
+      --accent-soft:rgba(255,122,79,.14);
+      --teal:#4EC5BC;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px -12px rgba(0,0,0,.6);
+      --shadow-lg:0 2px 4px rgba(0,0,0,.4), 0 32px 64px -24px rgba(0,0,0,.8);
+    }
+  }
+
+  /* ---------- base ---------- */
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 16px); -webkit-text-size-adjust:100%}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none !important; transition:none !important} }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font:400 17px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{margin:0; line-height:1.15; letter-spacing:-.022em; font-weight:640}
+  h1{font-size:clamp(2.3rem,6.2vw,3.9rem); letter-spacing:-.032em}
+  h2{font-size:clamp(1.6rem,3.4vw,2.35rem)}
+  h3{font-size:1.06rem; letter-spacing:-.012em}
+  p{margin:0}
+  a{color:inherit}
+  img,svg{max-width:100%; display:block}
+  ::selection{background:var(--accent); color:var(--accent-ink)}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:6px}
+
+  .wrap{max-width:var(--maxw); margin-inline:auto; padding-inline:24px}
+  .eyebrow{
+    font-size:.74rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:14px;
+  }
+  .lede{color:var(--muted); font-size:1.06rem; max-width:60ch}
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50; height:var(--nav-h);
+    background:color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter:saturate(180%) blur(14px);
+    -webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid transparent;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  header.nav[data-stuck="true"]{border-bottom-color:var(--line)}
+  .nav-inner{max-width:var(--maxw); margin-inline:auto; height:100%; padding-inline:24px;
+    display:flex; align-items:center; gap:28px}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:660; letter-spacing:-.02em;
+    text-decoration:none; font-size:1.02rem; flex:none}
+  .brand .mark{width:28px; height:28px; border-radius:9px; flex:none; box-shadow:var(--shadow);
+    object-fit:cover; background:var(--surface)}
+  .nav-links{
+    display:flex; gap:4px; margin-left:auto; align-items:center;
+    overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch;
+  }
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{
+    text-decoration:none; color:var(--muted); font-size:.92rem; font-weight:500;
+    padding:7px 12px; border-radius:9px; white-space:nowrap;
+    transition:color .16s ease, background .16s ease;
+  }
+  .nav-links a:hover{color:var(--ink); background:var(--bg-alt)}
+  .nav-links a[aria-current="true"]{color:var(--ink); background:var(--bg-alt); font-weight:600}
+  .nav-cta{
+    flex:none; text-decoration:none; font-size:.9rem; font-weight:600;
+    padding:9px 16px; border-radius:10px; background:var(--ink); color:var(--bg);
+    transition:opacity .16s ease;
+  }
+  .nav-cta:hover{opacity:.85}
+  @media (max-width:900px){ .nav-cta{display:none} }
+  @media (max-width:560px){ .nav-links{margin-left:12px} .nav-inner{gap:0; padding-inline:16px} }
+
+  /* ---------- hero ---------- */
+  .hero{position:relative; padding:clamp(56px,9vw,104px) 0 clamp(48px,7vw,88px); overflow:hidden}
+  .hero::before{
+    content:""; position:absolute; inset:-40% 0 auto -10%; height:130%; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(46rem 30rem at 12% 8%, var(--accent-soft), transparent 62%),
+      radial-gradient(38rem 26rem at 88% 22%, color-mix(in srgb, var(--teal) 13%, transparent), transparent 60%);
+  }
+  .hero .wrap{position:relative; z-index:1}
+  .hero-grid{display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:clamp(32px,5vw,72px); align-items:center}
+  @media (max-width:940px){ .hero-grid{grid-template-columns:1fr; gap:48px} }
+  .hero h1 .accent{color:var(--accent)}
+  .hero p.lede{margin-top:20px; font-size:clamp(1.05rem,2vw,1.2rem)}
+  .swatches{display:flex; gap:7px; margin-bottom:22px}
+  .swatches span{width:30px; height:10px; border-radius:99px; opacity:.95}
+
+  .cta-row{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:34px}
+  .appstore{
+    display:inline-flex; align-items:center; gap:12px; text-decoration:none;
+    background:var(--ink); color:var(--bg); padding:12px 22px 12px 18px; border-radius:14px;
+    box-shadow:var(--shadow); transition:transform .16s ease, box-shadow .16s ease;
+  }
+  .appstore:hover{transform:translateY(-2px); box-shadow:var(--shadow-lg)}
+  .appstore:active{transform:translateY(0)}
+  .appstore svg{width:26px; height:26px; flex:none}
+  .appstore .txt{display:flex; flex-direction:column; line-height:1.15; text-align:left}
+  .appstore .txt small{font-size:.66rem; letter-spacing:.06em; text-transform:uppercase; opacity:.72}
+  .appstore .txt strong{font-size:1.02rem; font-weight:600; letter-spacing:-.015em}
+  .ghost-btn{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-weight:560; font-size:.95rem;
+    padding:13px 20px; border-radius:14px; border:1px solid var(--line-strong); color:var(--ink-soft);
+    transition:border-color .16s ease, color .16s ease, background .16s ease;
+  }
+  .ghost-btn:hover{border-color:var(--ink); color:var(--ink); background:var(--surface)}
+  .meta-line{margin-top:18px; font-size:.85rem; color:var(--muted)}
+
+  /* ---------- phone mockup ---------- */
+  /* Mirrors the real Projects screen: ProjectsView's inset-grouped List of
+     ProjectRow, inside RootView's four-tab TabView. Sizes are iOS points
+     scaled by ~0.76 to fit a 300px-wide screen. */
+  .phone-stage{display:flex; justify-content:center}
+  .phone{
+    width:min(322px,82vw); aspect-ratio:9/19.5; border-radius:46px; position:relative;
+    background:linear-gradient(160deg,#3A3330,#15100E 45%,#2E2724);
+    padding:11px; box-shadow:var(--shadow-lg); transform:rotate(-2.2deg);
+  }
+  .screen{
+    width:100%; height:100%; border-radius:36px; overflow:hidden; position:relative;
+    display:flex; flex-direction:column;
+    background:var(--ios-grouped); color:var(--ios-label);
+    font-size:13px; line-height:1.3;
+    --ios-grouped:#F2F2F7;
+    --ios-card:#FFFFFF;
+    --ios-label:#000000;
+    --ios-secondary:rgba(60,60,67,.6);
+    --ios-separator:rgba(60,60,67,.29);
+    --ios-fill:rgba(116,116,128,.17);
+    --ios-tint:#007AFF;
+    --ios-bar:rgba(249,249,249,.94);
+  }
+  @media (prefers-color-scheme: dark){
+    .screen{
+      --ios-grouped:#000000;
+      --ios-card:#1C1C1E;
+      --ios-label:#FFFFFF;
+      --ios-secondary:rgba(235,235,245,.6);
+      --ios-separator:rgba(84,84,88,.6);
+      --ios-fill:rgba(118,118,128,.3);
+      --ios-tint:#0A84FF;
+      --ios-bar:rgba(29,29,31,.94);
+    }
+  }
+
+  /* status bar + Dynamic Island */
+  .ios-status{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:11px 20px 0; font-size:11.5px; font-weight:640; letter-spacing:-.01em; flex:none;
+  }
+  .ios-status svg{height:11px; width:auto; fill:currentColor}
+  .island{
+    position:absolute; top:9px; left:50%; transform:translateX(-50%);
+    width:78px; height:23px; border-radius:99px; background:#000; z-index:2;
+  }
+
+  /* navigation bar: Edit / + toolbar row, then the large title */
+  .ios-nav{padding:6px 16px 6px; flex:none}
+  .ios-nav-bar{display:flex; align-items:center; justify-content:space-between; height:19px}
+  .ios-nav-bar span{color:var(--ios-tint); font-size:13px}
+  .ios-nav-bar .plus{font-size:17px; line-height:1; font-weight:400}
+  .ios-title{font-size:26px; font-weight:700; letter-spacing:-.028em; margin-top:2px}
+
+  /* inset-grouped list */
+  .ios-list{flex:1; padding:6px 12px 0; overflow:hidden}
+  .ios-card{background:var(--ios-card); border-radius:9px; overflow:hidden}
+  .ios-row{
+    display:flex; align-items:center; gap:8px;
+    padding:8px 11px 8px 12px; position:relative;
+  }
+  .ios-row + .ios-row::before{
+    content:""; position:absolute; top:0; left:12px; right:0; height:1px;
+    background:var(--ios-separator); transform:scaleY(.5); transform-origin:top;
+  }
+  .ios-row .content{flex:1; min-width:0; display:flex; flex-direction:column; gap:4.5px}
+  /* ProjectRow: name + Spacer + state chip */
+  .ios-row .head{display:flex; align-items:center; gap:8px}
+  .ios-row .title{font-size:13px; letter-spacing:-.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .ios-row .chip{
+    margin-left:auto; flex:none; font-size:9.2px; color:var(--ios-secondary);
+    padding:1.5px 6px; border-radius:99px; background:var(--ios-fill); white-space:nowrap;
+  }
+  /* ProjectRow.dateSummary — .caption, .secondary */
+  .ios-row .dates{font-size:9.2px; color:var(--ios-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  /* ProjectRow.swatches — 28pt circles, .separator border, then "+n" */
+  .ios-row .swatches{display:flex; align-items:center; gap:3px}
+  .ios-row .swatches i{
+    width:21px; height:21px; border-radius:50%; display:block;
+    box-shadow:inset 0 0 0 1px var(--ios-separator);
+  }
+  .ios-row .swatches em{font-size:9.2px; font-style:normal; color:var(--ios-secondary); margin-left:2px}
+  /* the disclosure chevron the NavigationLink adds */
+  .ios-row .chevron{flex:none; width:7px; height:11px; color:var(--ios-secondary); opacity:.75}
+  .ios-row .chevron svg{width:100%; height:100%; fill:none; stroke:currentColor; stroke-width:2.6;
+    stroke-linecap:round; stroke-linejoin:round}
+
+  /* tab bar — AppSection.allCases, Projects selected */
+  .ios-tabs{
+    flex:none; display:flex; align-items:flex-start; justify-content:space-around;
+    padding:7px 6px 16px; background:var(--ios-bar);
+    border-top:1px solid var(--ios-separator);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+  }
+  .ios-tabs a{
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    color:var(--ios-secondary); text-decoration:none; font-size:7.6px; font-weight:520; letter-spacing:.005em;
+  }
+  .ios-tabs a.on{color:var(--ios-tint)}
+  .ios-tabs svg{width:19px; height:19px; fill:none; stroke:currentColor; stroke-width:1.5;
+    stroke-linecap:round; stroke-linejoin:round}
+  .home-bar{
+    position:absolute; bottom:7px; left:50%; transform:translateX(-50%);
+    width:106px; height:4px; border-radius:99px; background:var(--ios-label); opacity:.85;
+  }
+
+  /* ---------- sections ---------- */
+  section{padding:clamp(64px,8vw,104px) 0; scroll-margin-top:calc(var(--nav-h) + 8px)}
+  section.tint{background:var(--bg-alt); border-block:1px solid var(--line)}
+  .sec-head{max-width:64ch; margin-bottom:clamp(36px,5vw,56px)}
+  .sec-head p{margin-top:14px}
+
+  .features{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px}
+  .feature{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px 24px 24px; box-shadow:var(--shadow);
+    transition:transform .18s ease, border-color .18s ease;
+  }
+  .feature:hover{transform:translateY(-3px); border-color:var(--line-strong)}
+  .icon{
+    width:40px; height:40px; border-radius:11px; display:grid; place-items:center; margin-bottom:16px;
+    background:var(--accent-soft); color:var(--accent);
+  }
+  .icon svg{width:21px; height:21px; stroke:currentColor; stroke-width:1.7; fill:none;
+    stroke-linecap:round; stroke-linejoin:round}
+  .feature h3{margin-bottom:8px}
+  .feature p{color:var(--muted); font-size:.94rem}
+
+  /* ---------- steps ---------- */
+  .steps{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:28px; counter-reset:step}
+  .step{position:relative; padding-top:26px; border-top:2px solid var(--line-strong)}
+  .step::before{
+    counter-increment:step; content:counter(step,decimal-leading-zero);
+    position:absolute; top:-2px; left:0; padding-top:26px;
+    font-size:.74rem; font-weight:700; letter-spacing:.1em; color:var(--accent);
+  }
+  .step h3{margin:26px 0 8px}
+  .step p{color:var(--muted); font-size:.94rem}
+
+  /* ---------- pipeline ---------- */
+  .pipeline{display:flex; flex-wrap:wrap; gap:8px; margin-top:32px}
+  .pipeline span{
+    font-size:.82rem; font-weight:560; padding:8px 15px; border-radius:99px;
+    border:1px solid var(--line-strong); color:var(--ink-soft); background:var(--surface);
+  }
+  .pipeline span:last-child{background:var(--accent); border-color:var(--accent); color:var(--accent-ink); font-weight:640}
+
+  /* ---------- split ---------- */
+  .split{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:clamp(32px,5vw,64px); align-items:center}
+  @media (max-width:860px){ .split{grid-template-columns:1fr} }
+  /* Mirror the second split so the two don't read as the same block twice.
+     Only above the stacking breakpoint — stacked, the heading must come first. */
+  @media (min-width:861px){ .split.mirror > :first-child{order:2} .split.mirror > :last-child{order:1} }
+  .bullets{list-style:none; padding:0; margin:26px 0 0; display:grid; gap:14px}
+  .bullets li{display:flex; gap:12px; align-items:flex-start; font-size:.96rem; color:var(--ink-soft)}
+  .bullets svg{width:19px; height:19px; flex:none; margin-top:3px; color:var(--accent);
+    stroke:currentColor; stroke-width:2; fill:none; stroke-linecap:round; stroke-linejoin:round}
+
+  .paper{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow-lg); padding:26px; display:grid; gap:14px;
+  }
+  .paper .title{font-weight:680; letter-spacing:-.02em; font-size:1.1rem}
+  .paper .kv{display:flex; justify-content:space-between; gap:16px; font-size:.86rem; padding-bottom:10px;
+    border-bottom:1px dashed var(--line); color:var(--muted)}
+  .paper .kv b{color:var(--ink); font-weight:600}
+  .paper .strip{display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+  .paper .strip b{aspect-ratio:1; border-radius:9px; display:block; box-shadow:inset 0 0 0 1px var(--line-strong)}
+
+  /* ---------- faq ---------- */
+  .faq{display:grid; gap:0; max-width:820px; border-top:1px solid var(--line)}
+  details{border-bottom:1px solid var(--line)}
+  details summary{
+    cursor:pointer; list-style:none; padding:20px 40px 20px 0; position:relative;
+    font-weight:600; letter-spacing:-.012em; font-size:1rem;
+  }
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{
+    content:""; position:absolute; right:8px; top:50%; width:10px; height:10px;
+    border-right:2px solid var(--muted); border-bottom:2px solid var(--muted);
+    transform:translateY(-70%) rotate(45deg); transition:transform .2s ease;
+  }
+  details[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+  details p{padding:0 0 22px; color:var(--muted); font-size:.95rem; max-width:66ch}
+
+  /* ---------- cta ---------- */
+  .cta-panel{
+    position:relative; overflow:hidden; border-radius:26px; padding:clamp(40px,6vw,68px);
+    background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow-lg); text-align:center;
+  }
+  .cta-panel::before{
+    content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(30rem 18rem at 20% 0%, var(--accent-soft), transparent 65%),
+      radial-gradient(28rem 18rem at 85% 100%, color-mix(in srgb,var(--teal) 14%, transparent), transparent 65%);
+  }
+  .cta-panel > *{position:relative; z-index:1}
+  .cta-panel .lede{margin:16px auto 0}
+  .cta-panel .cta-row{justify-content:center}
+  .mail{
+    display:inline-flex; align-items:center; gap:9px; margin-top:30px; text-decoration:none;
+    font-weight:600; font-size:1rem; color:var(--ink);
+    border-bottom:2px solid var(--accent); padding-bottom:3px;
+    transition:color .16s ease;
+  }
+  .mail:hover{color:var(--accent)}
+  .mail svg{width:18px; height:18px; stroke:currentColor; stroke-width:1.7; fill:none;
+    stroke-linecap:round; stroke-linejoin:round}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line); padding:36px 0 48px; background:var(--bg-alt)}
+  .foot{display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;
+    font-size:.86rem; color:var(--muted)}
+  .foot a{color:var(--muted); text-decoration:none}
+  .foot a:hover{color:var(--ink)}
+  .foot nav{display:flex; gap:20px; flex-wrap:wrap}
+
+  /* ---------- reveal ---------- */
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease}
+  .reveal.in{opacity:1; transform:none}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img class="mark" src="assets/app-icon.png" width="28" height="28" alt="" aria-hidden="true">
+      Mini&nbsp;Companion
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#paints">Paints</a>
+      <a href="#share">Share</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#download">Join the beta</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="swatches" aria-hidden="true">
+            <span style="background:#C8471F"></span>
+            <span style="background:#E2A33C"></span>
+            <span style="background:#1F6F6B"></span>
+            <span style="background:#3D5A98"></span>
+            <span style="background:#8B4A7A"></span>
+          </div>
+          <h1>Every miniature you paint,<br><span class="accent">properly logged.</span></h1>
+          <p class="lede">Mini Companion is an iPhone app for miniature painters. It tracks each model from sprue to finished, keeps a photo log of every stage, remembers which paints you own and which ones you used — and turns the whole thing into a PDF you can share when the model is done.</p>
+          <div class="cta-row" id="download">
+            <!-- The app is in open beta, not on the App Store. Set TESTFLIGHT_URL in
+                 the script at the bottom of this file and both of these buttons upgrade
+                 themselves into real TestFlight links. Until then they say so rather
+                 than pointing at a page that does not exist. -->
+            <a class="appstore" data-beta-cta href="#contact" aria-label="The Mini Companion open beta link is coming shortly">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 2.6 10.6 13.4"/><path d="M21.4 2.6 15 21.4l-4.4-8-8-4.4z"/></svg>
+              <span class="txt"><small>Open beta</small><strong>Link coming shortly</strong></span>
+            </a>
+            <a class="ghost-btn" href="#features">See what it does →</a>
+          </div>
+          <p class="meta-line">In open beta through TestFlight · iPhone · iOS 18 or later · Free, no account, your data stays on device.</p>
+        </div>
+
+        <div class="phone-stage">
+          <div class="phone" aria-hidden="true">
+            <div class="screen">
+              <span class="island"></span>
+              <div class="ios-status">
+                <span>9:41</span>
+                <span>
+                  <svg viewBox="0 0 78 12"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/><path d="M24 4.6a9 9 0 0 1 11 0l-1.4 1.7a6.8 6.8 0 0 0-8.2 0zm2.6 3.1a5 5 0 0 1 5.8 0l-2.9 3.5z"/><rect x="42" y="2" width="19" height="9.5" rx="3" fill="none" stroke="currentColor" stroke-width="1" opacity=".45"/><rect x="43.5" y="3.5" width="13" height="6.5" rx="1.8"/><path d="M62.5 5.2v3.2a2.1 2.1 0 0 0 0-3.2z" opacity=".45"/></svg>
+                </span>
+              </div>
+
+              <div class="ios-nav">
+                <div class="ios-nav-bar"><span>Edit</span><span class="plus">+</span></div>
+                <div class="ios-title">Projects</div>
+              </div>
+
+              <div class="ios-list">
+                <div class="ios-card">
+
+                  <div class="ios-row">
+                    <div class="content">
+                      <div class="head"><span class="title">Intercessor Squad</span><span class="chip">Painting</span></div>
+                      <div class="dates">Started 12 Mar 2026</div>
+                      <div class="swatches">
+                        <i style="background:#0F3D75"></i><i style="background:#9A1115"></i>
+                        <i style="background:#C9A227"></i><i style="background:#2E2B28"></i>
+                        <i style="background:#7C5B3F"></i><em>+2</em>
+                      </div>
+                    </div>
+                    <span class="chevron"><svg viewBox="0 0 7 12"><path d="M1 1l5 5-5 5"/></svg></span>
+                  </div>
+
+                  <div class="ios-row">
+                    <div class="content">
+                      <div class="head"><span class="title">Bloodletter Champion</span><span class="chip">Finished</span></div>
+                      <div class="dates">Started 12 Mar 2026 · Finished 12 Apr 2026</div>
+                      <div class="swatches">
+                        <i style="background:#8B1E24"></i><i style="background:#C8471F"></i>
+                        <i style="background:#E2A33C"></i><i style="background:#33313A"></i>
+                      </div>
+                    </div>
+                    <span class="chevron"><svg viewBox="0 0 7 12"><path d="M1 1l5 5-5 5"/></svg></span>
+                  </div>
+
+                  <div class="ios-row">
+                    <div class="content">
+                      <div class="head"><span class="title">Dwarf Slayer</span><span class="chip">Primed</span></div>
+                      <div class="dates">Started 2 Aug 2026</div>
+                      <div class="swatches">
+                        <i style="background:#D8D5CE"></i><i style="background:#F26722"></i>
+                      </div>
+                    </div>
+                    <span class="chevron"><svg viewBox="0 0 7 12"><path d="M1 1l5 5-5 5"/></svg></span>
+                  </div>
+
+                  <!-- no paints yet, so ProjectRow omits the swatch strip -->
+                  <div class="ios-row">
+                    <div class="content">
+                      <div class="head"><span class="title">Necron Warriors ×10</span><span class="chip">Assembled</span></div>
+                      <div class="dates">Started 14 Aug 2026</div>
+                    </div>
+                    <span class="chevron"><svg viewBox="0 0 7 12"><path d="M1 1l5 5-5 5"/></svg></span>
+                  </div>
+
+                  <div class="ios-row">
+                    <div class="content">
+                      <div class="head"><span class="title">Terrain — Ruined Wall</span><span class="chip">Sprue</span></div>
+                      <div class="dates">Started 18 Aug 2026</div>
+                    </div>
+                    <span class="chevron"><svg viewBox="0 0 7 12"><path d="M1 1l5 5-5 5"/></svg></span>
+                  </div>
+
+                  <div class="ios-row">
+                    <div class="content">
+                      <div class="head"><span class="title">Ork Nob Warband</span><span class="chip">Basing</span></div>
+                      <div class="dates">Started 20 Jun 2026</div>
+                      <div class="swatches">
+                        <i style="background:#4C6B3C"></i><i style="background:#7A2E2E"></i>
+                        <i style="background:#B5B2AA"></i><i style="background:#5B4632"></i>
+                        <i style="background:#2F4858"></i><em>+4</em>
+                      </div>
+                    </div>
+                    <span class="chevron"><svg viewBox="0 0 7 12"><path d="M1 1l5 5-5 5"/></svg></span>
+                  </div>
+
+                  <div class="ios-row">
+                    <div class="content">
+                      <div class="head"><span class="title">Cygnar Warcaster</span><span class="chip">Painting</span></div>
+                      <div class="dates">Started 3 Jul 2026</div>
+                      <div class="swatches">
+                        <i style="background:#1F4C8C"></i><i style="background:#C9A227"></i>
+                        <i style="background:#8A8F94"></i>
+                      </div>
+                    </div>
+                    <span class="chevron"><svg viewBox="0 0 7 12"><path d="M1 1l5 5-5 5"/></svg></span>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="ios-tabs">
+                <a><svg viewBox="0 0 24 24"><path d="M12 3.2c-4.9 0-8.8 3.5-8.8 8s3 7.4 6.5 7.4c1.2 0 1.8-.7 1.8-1.5 0-.5-.3-.8-.5-1.1-.3-.4-.5-.7-.5-1.2 0-.9.7-1.6 1.7-1.6h1.3c3.5 0 5.5-2.1 5.5-5 0-2.9-3-5-7-5z"/><circle cx="8.1" cy="11" r="1.15" fill="currentColor" stroke="none"/><circle cx="11.3" cy="7.9" r="1.15" fill="currentColor" stroke="none"/><circle cx="15.4" cy="9.1" r="1.15" fill="currentColor" stroke="none"/></svg>Paints</a>
+                <a class="on"><svg viewBox="0 0 24 24"><path d="M12 2.6 3.6 6.4 12 10.2l8.4-3.8z"/><path d="M3.6 11.6 12 15.4l8.4-3.8"/><path d="M3.6 16.8 12 20.6l8.4-3.8"/></svg>Projects</a>
+                <a><svg viewBox="0 0 24 24"><path d="M3.4 8.2 12 4.1l8.6 4.1v8.1L12 20.4l-8.6-4.1z"/><path d="M3.4 8.2 12 12.3l8.6-4.1M12 12.3v8.1"/></svg>Stash</a>
+                <a><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.9h0l1.6 1.7 2.2-.7 1 2.1 2.3.3-.2 2.3 1.9 1.3-1.2 2 1.2 2-1.9 1.3.2 2.3-2.3.3-1 2.1-2.2-.7L12 21.1l-1.6-1.7-2.2.7-1-2.1-2.3-.3.2-2.3-1.9-1.3 1.2-2-1.2-2 1.9-1.3-.2-2.3 2.3-.3 1-2.1 2.2.7z"/></svg>Settings</a>
+              </div>
+
+              <span class="home-bar"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features" class="tint">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow">What it does</div>
+        <h2>One app for the whole bench</h2>
+        <p class="lede">Painting a miniature is a long job spread over weeks. Mini Companion holds the parts that are easy to lose track of — where each model got to, what you mixed, and what is still in the box.</p>
+      </div>
+
+      <div class="features">
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2.4"/></svg></div>
+          <h3>Progress from sprue to finished</h3>
+          <p>Every project moves through six states — Sprue, Assembled, Primed, Painting, Basing, Finished — and you can step it in either direction when a model goes back for a fix.</p>
+        </div>
+
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.2l1.1-1.7h6.4L16.3 6h1.2A2.5 2.5 0 0 1 20 8.5v8A2.5 2.5 0 0 1 17.5 19h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.2" r="3.2"/></svg></div>
+          <h3>A photo log per stage</h3>
+          <p>Shoot from the camera or pull from your library. Each photo is stamped with the state the model was in, so a finished mini carries its own progress gallery — grouped, full-screen, zoomable.</p>
+        </div>
+
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2.2-.9 2.2-1.9 0-.6-.3-1-.6-1.4-.3-.4-.6-.8-.6-1.4 0-1 .8-1.8 1.9-1.8H16a5 5 0 0 0 5-5c0-3.6-4-6.5-9-6.5z"/><circle cx="8" cy="11" r="1.1" fill="currentColor" stroke="none"/><circle cx="11" cy="7.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Your paint inventory</h3>
+          <p>Pick from a bundled catalogue of over 11,000 paints across 34 brands. Search by name or manufacturer code, filter the list down, track how full each pot is, and attach the exact paints you used to each project.</p>
+        </div>
+
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9.4" cy="9.8" r="4.7"/><circle cx="14.6" cy="9.8" r="4.7"/><path d="M12 14.6c-1.7 1.9-2.6 3.4-2.6 4.5a2.6 2.6 0 0 0 5.2 0c0-1.1-.9-2.6-2.6-4.5z"/></svg></div>
+          <h3>Recipes for your own mixes</h3>
+          <p>Write a mix down in parts — two Waaagh! Flesh, one Screaming Skull, one medium — and keep it next to the inventory that already knows which of those pots you own.</p>
+        </div>
+
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M3.5 8.5 12 4l8.5 4.5-8.5 4.5z"/><path d="M3.5 12.4 12 16.9l8.5-4.5"/><path d="M3.5 16.1 12 20.6l8.5-4.5"/></svg></div>
+          <h3>The stash, honestly counted</h3>
+          <p>Log the kits you have bought but not started, each with a picture. When one finally reaches the bench, promote it — it becomes a project on the sprue and the picture comes with it.</p>
+        </div>
+
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3 1.9"/></svg></div>
+          <h3>History and timing</h3>
+          <p>Every state change is recorded automatically. The detail screen shows how long the model sat in each stage and how long it has taken overall — no timers to start, nothing to fill in.</p>
+        </div>
+
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M18 9A6 6 0 0 0 6 9c0 5.2-2 6.7-2 6.7h16S18 14.2 18 9"/><path d="M13.7 19.2a2 2 0 0 1-3.4 0"/></svg></div>
+          <h3>Reminders that nag, gently</h3>
+          <p>Set a threshold per state and the app tells you when a model has been sitting too long. Reminders fire at a time of day you choose, and tapping one opens straight to that project.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow">How it works</div>
+        <h2>Add it, move it, photograph it</h2>
+        <p class="lede">There is no setup and no ceremony. The app asks for a name and gets out of the way.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <h3>Start a project</h3>
+          <p>Give the model a name, or promote something already sitting in your stash. It begins on the sprue with today's date.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Move it along</h3>
+          <p>Tap the state control as you go. The app timestamps the change, writes it into the project's history and reschedules any reminder.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Photograph and note</h3>
+          <p>Take a picture whenever it looks worth keeping. Add a note, confirm the stage, and it lands in the log under that state.</p>
+        </div>
+        <div class="step reveal">
+          <h3>Share the finish</h3>
+          <p>When the model is done, export the project as a PDF — summary, paints, timings and every photo — and send it wherever you like.</p>
+        </div>
+      </div>
+
+      <div class="pipeline reveal" aria-label="Project states">
+        <span>Sprue</span><span>Assembled</span><span>Primed</span><span>Painting</span><span>Basing</span><span>Finished</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAINTS -->
+  <section id="paints" class="tint">
+    <div class="wrap">
+      <div class="split">
+        <div class="reveal">
+          <div class="eyebrow">Paints &amp; recipes</div>
+          <h2>Know what you own before you buy it again</h2>
+          <p class="lede">The inventory is the part of the app you will open in a shop. It ships with the catalogue already inside, so there is nothing to download and nothing to type twice.</p>
+          <ul class="bullets">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span><b>11,442 paints, 34 brands, 195 sets</b> bundled with the app and searchable offline.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Search by <b>name or product code</b> — separators and spacing are ignored, so “XV-17” finds “XV17”.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Filter by brand, set or ownership, right from the list.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Attach paints to a project so the recipe survives the six months until you paint the second squad.</span></li>
+          </ul>
+        </div>
+
+        <div class="paper reveal" aria-hidden="true">
+          <div class="title">Intercessor Squad — paints used</div>
+          <div class="kv"><span>Macragge Blue</span><b>Citadel · Base</b></div>
+          <div class="kv"><span>Retributor Armour</span><b>Citadel · Layer</b></div>
+          <div class="kv"><span>Vermilion Red</span><b>Vallejo · Model Color</b></div>
+          <div class="kv" style="border-bottom:none"><span>Black Templar</span><b>Citadel · Contrast</b></div>
+          <div class="strip">
+            <b style="background:#3D5A98"></b><b style="background:#E2A33C"></b>
+            <b style="background:#C8471F"></b><b style="background:#241F22"></b>
+          </div>
+        </div>
+      </div>
+
+      <div class="split mirror" style="margin-top:clamp(56px,7vw,96px)">
+        <div class="reveal">
+          <div class="eyebrow">Mixing recipes</div>
+          <h2>The mix you got right once, written down</h2>
+          <p class="lede">Every painter has a colour they nailed on a Sunday afternoon and could not reproduce a month later. A recipe is where that goes: a name, the ingredients in whole parts, and a swatch you dial in yourself while looking at the real thing on the palette.</p>
+          <ul class="bullets">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Built from the <b>paints you already own</b>, in parts — “2 : 1 : 1”, the way painters actually say it.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Water, medium, flow improver, thinner and retarder can carry a ratio too.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Every recipe is checked against your pots, so it can tell you <b>you are out of Screaming Skull</b> before you sit down.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span><b>Make Pot</b> promotes a mix into a real paint in your inventory once you have mixed a batch of it.</span></li>
+          </ul>
+          <p class="meta-line" style="margin-top:20px">The swatch is yours to set. The app never guesses a mixed colour from its ingredients — averaging hex codes models light, not paint, and it would be confidently wrong while you are looking at the real thing.</p>
+        </div>
+
+        <div class="paper reveal" aria-hidden="true">
+          <div class="title">Ork Skin</div>
+          <div class="kv"><span>Waaagh! Flesh</span><b>2 parts</b></div>
+          <div class="kv"><span>Screaming Skull</span><b>1 part</b></div>
+          <div class="kv"><span>Lahmian Medium</span><b>1 part</b></div>
+          <div class="kv"><span>Water</span><b>1 part</b></div>
+          <div class="kv" style="border-bottom:none"><span>Can you make it?</span><b style="color:var(--teal)">Yes — everything in stock</b></div>
+          <div class="strip">
+            <b style="background:#3F6B3B"></b><b style="background:#E6E2B4"></b>
+            <b style="background:#D9D2C8"></b><b style="background:#7A9450"></b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHARE -->
+  <section id="share">
+    <div class="wrap">
+      <div class="split mirror">
+        <div class="reveal">
+          <div class="eyebrow">Export</div>
+          <h2>The finished model, as a document</h2>
+          <p class="lede">Hitting Share builds a PDF of the whole project: the summary, the paints, the full state history with the photos taken during each step, the total time it took, and any notes you type at the moment of export. Then it hands it to the normal iOS share sheet.</p>
+          <ul class="bullets">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Good for a commission hand-off, a club post, or your own records.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Message it, mail it, AirDrop it or save it to Files — whatever the share sheet offers.</span></li>
+          </ul>
+        </div>
+        <div class="paper reveal" aria-hidden="true">
+          <div class="title">Bloodletter Champion.pdf</div>
+          <div class="kv"><span>Started</span><b>12 March</b></div>
+          <div class="kv"><span>Finished</span><b>12 April</b></div>
+          <div class="kv"><span>Total time</span><b>31 days</b></div>
+          <div class="kv"><span>Photos</span><b>14, across 6 stages</b></div>
+          <div class="kv" style="border-bottom:none"><span>Paints</span><b>9</b></div>
+          <div class="strip">
+            <b style="background:#8B1E24"></b><b style="background:#C8471F"></b>
+            <b style="background:#E2A33C"></b><b style="background:#1F6F6B"></b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="tint">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="eyebrow">Questions</div>
+        <h2>Before you download</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>Where is my data kept?</summary>
+          <p>On your iPhone. Projects, photos, paints and stash entries all live in local storage on the device — there is no account to create and nothing is uploaded anywhere.</p>
+        </details>
+        <details>
+          <summary>Does it cost anything?</summary>
+          <p>No. It is free, with no subscription and no in-app purchases — nothing in the app is gated behind a payment.</p>
+        </details>
+        <details>
+          <summary>Is it on the App Store yet?</summary>
+          <p>Not yet. It is in <strong>open beta</strong> through TestFlight, Apple's own beta distribution: install the free TestFlight app, open the beta link, and Mini Companion installs from there. Two things to know going in — beta builds expire after 90 days, so there will be the occasional update prompt, and you can send feedback straight from TestFlight by taking a screenshot inside the app. An App Store release follows once the beta has settled.</p>
+        </details>
+        <details>
+          <summary>Can I add a paint that is not in the catalogue?</summary>
+          <p>Paints are added from the bundled catalogue, which keeps the inventory consistent and searchable rather than a pile of near-duplicate typing. The other way a paint appears is through a recipe: write down a mix, tap Make Pot, and it joins the inventory as a custom paint with the swatch you chose.</p>
+        </details>
+        <details>
+          <summary>Does a recipe mean a full painting scheme?</summary>
+          <p>Not yet. A recipe is a <em>mix</em> — several paints and additives combined in ratios to make one colour. Step-by-step schemes (basecoat, wash, layer, edge highlight) are a separate idea and belong with projects; if that is what you want, say so.</p>
+        </details>
+        <details>
+          <summary>What if I paint a model out of order?</summary>
+          <p>That is expected. States move in both directions, so a finished model can go back to Painting for a touch-up and the history records both moves.</p>
+        </details>
+        <details>
+          <summary>Can I turn the reminders off?</summary>
+          <p>Yes, entirely, or per state. Thresholds, repeats and the time of day they fire are all set in Settings.</p>
+        </details>
+        <details>
+          <summary>Is there an iPad or Android version?</summary>
+          <p>Not today. It is an iPhone app. If there is demand for iPad, get in touch — that is the kind of thing worth hearing about.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="cta-panel reveal">
+        <div class="eyebrow">Get it</div>
+        <h2>Stop guessing what you primed last month</h2>
+        <p class="lede">Mini Companion keeps the record so you can get back to the brush.</p>
+        <div class="cta-row">
+          <a class="appstore" data-beta-cta href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20beta" aria-label="The Mini Companion open beta link is coming shortly">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 2.6 10.6 13.4"/><path d="M21.4 2.6 15 21.4l-4.4-8-8-4.4z"/></svg>
+            <span class="txt"><small>Open beta</small><strong>Link coming shortly</strong></span>
+          </a>
+        </div>
+        <div>
+          <a class="mail" href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.8 7 8.2 6 8.2-6"/></svg>
+            giuliano.galea@icloud.com
+          </a>
+        </div>
+        <p class="meta-line" style="margin-top:14px">Bugs, feature requests, or a picture of something you painted — all welcome.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="year">2026</span> Giuliano Galea · Mini Companion</span>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#faq">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // The TestFlight public link. Empty until Beta App Review has passed — see
+  // docs/open-beta-release.md, Section 9. Filling it in is the whole of the second
+  // publish: both CTAs turn themselves from "link coming shortly" into real links,
+  // labels and all. Leave it empty rather than guessing the URL; a dead beta link on
+  // a public page is worse than an honest one that says "not yet".
+  const TESTFLIGHT_URL = '';
+
+  if (TESTFLIGHT_URL) {
+    document.querySelectorAll('[data-beta-cta]').forEach(a => {
+      a.href = TESTFLIGHT_URL;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.setAttribute('aria-label', 'Join the Mini Companion open beta on TestFlight');
+      a.querySelector('small').textContent = 'Join the open beta on';
+      a.querySelector('strong').textContent = 'TestFlight';
+    });
+  }
+
+  // Border on the nav once the page has scrolled.
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.dataset.stuck = window.scrollY > 8;
+  onScroll();
+  window.addEventListener('scroll', onScroll, {passive:true});
+
+  // Highlight the nav link for whichever section is in view.
+  const links = [...document.querySelectorAll('.nav-links a')];
+  const byId = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const sections = [...byId.keys()].map(id => document.getElementById(id)).filter(Boolean);
+
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(a => a.removeAttribute('aria-current'));
+      byId.get(e.target.id)?.setAttribute('aria-current', 'true');
+    });
+  }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+  sections.forEach(s => spy.observe(s));
+
+  // Fade sections in as they arrive.
+  const reveals = document.querySelectorAll('.reveal');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reveals.forEach(el => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e, i) => {
+        if (!e.isIntersecting) return;
+        setTimeout(() => e.target.classList.add('in'), Math.min(i, 5) * 60);
+        obs.unobserve(e.target);
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:.08});
+    reveals.forEach(el => io.observe(el));
+  }
+</script>
+</body>
+</html>
