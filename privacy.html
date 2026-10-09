@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy — Mini Companion</title>
-<meta name="description" content="What Mini Companion does with your data: everything you create stays on your iPhone, and nothing is sent anywhere unless you choose to turn on anonymous analytics and crash reports.">
+<meta name="description" content="What Mini Companion does with your data: everything you create stays on your devices and in your own private iCloud, and nothing is sent anywhere else unless you choose to turn on anonymous analytics and crash reports.">
 <meta name="theme-color" content="#14110F">
 <meta property="og:title" content="Mini Companion — Privacy Policy">
-<meta property="og:description" content="Everything you create stays on your iPhone. Analytics and crash reports are off unless you turn them on.">
+<meta property="og:description" content="Everything you create stays on your devices and in your private iCloud. Analytics and crash reports are off unless you turn them on.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/app-icon.png">
 <link rel="apple-touch-icon" href="assets/app-icon.png">
@@ -206,12 +206,12 @@
     <div class="wrap">
       <div class="eyebrow">Privacy</div>
       <h1>What Mini Companion does with your data</h1>
-      <p class="updated">Last updated 26 September 2026 · applies to Mini Companion 1.0 for iPhone, currently distributed as an open beta through TestFlight.</p>
+      <p class="updated">Last updated 5 October 2026 · applies to Mini Companion 1.0 for iPhone and iPad, currently distributed as an open beta through TestFlight.</p>
 
       <div class="glance">
         <h2>The short version</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Everything you create — projects, photos, paints, recipes, stash, notes — <b>stays on your iPhone</b>. There is no account and no server to send it to.</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Everything you create — projects, photos, paints, recipes, stash, notes — <b>stays on your devices</b>, and syncs between them through <b>your own private iCloud</b>. There is no account to create and no server of mine to send it to, and I cannot see any of it.</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Anonymous <b>usage analytics and crash reports</b> can be sent to Google Firebase — but only if you turn them on. They are <b>off until you do</b>, and the app asks once, on first launch.</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>If you do turn them on, they carry screen names, counts and yes/no flags — <b>never</b> the names of your projects or paints, your notes, or your photos.</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Nothing is sold, and nothing is used to advertise to you or to track you across other apps.</span></li>
@@ -229,8 +229,8 @@
       </section>
 
       <section id="on-device">
-        <h2>What stays on your device</h2>
-        <p>Everything you put into the app. Mini Companion has no account, no sign-in and no backend, so your painting records have nowhere to go except your own phone:</p>
+        <h2>Where your data lives</h2>
+        <p>Everything you put into the app. Mini Companion has no account, no sign-in and no backend of its own, so your painting records live in two places only: on your own devices, and — while iCloud sync is on — in your own private iCloud:</p>
         <ul>
           <li><b>Projects</b> — names, states, the full history of state changes and their dates.</li>
           <li><b>Photos</b> — every picture you attach to a project, plus the thumbnails generated from them.</li>
@@ -240,15 +240,28 @@
           <li><b>Notes</b> — anything you type anywhere in the app.</li>
           <li><b>Settings</b> — your notification preferences, your low-stock threshold, and the two privacy choices below.</li>
         </ul>
-        <p>Technically, this lives in the app's own private storage: a database file and a photo folder inside the app's Application Support directory, which only Mini Companion can read. Nothing there is uploaded, backed up to me, or shared with anyone.</p>
+        <p>Technically, on each device this lives in the app's own private storage: a database file and a photo folder inside the app's Application Support directory, which only Mini Companion can read. Apart from iCloud sync, described next, nothing there is uploaded, backed up to me, or shared with anyone.</p>
         <div class="notice calm">
-          <p><strong>Deleting the app deletes all of it.</strong> Because there is no copy anywhere else, removing Mini Companion from your iPhone erases every project, photo, paint and recipe permanently. If any of it matters to you, export it first — and if your iPhone is included in an iCloud or computer backup, your device backup will contain the app's data in the same way it contains any other app's.</p>
+          <p><strong>Deleting the app deletes that device's copy.</strong> Whatever is in your iCloud stays there, and comes back when you install the app again on a device signed into the same account. If there is no iCloud copy — because sync was never on, or because you erased it — removing Mini Companion erases every project, photo, paint and recipe on that device permanently. If any of it matters to you, export it first — and if your device is included in an iCloud or computer backup, the backup will contain the app's data in the same way it contains any other app's.</p>
         </div>
+      </section>
+
+      <section id="icloud">
+        <h2>iCloud sync</h2>
+        <p>Your data syncs through your private iCloud account and isn't accessible to the developer. You can turn sync off in Settings or erase the iCloud copy.</p>
+        <p>Sync keeps your projects, photos, paints, recipes, stash and notes the same on every iPhone, iPad and Mac signed into your Apple Account. It is on by default whenever you are signed into iCloud, and there is nothing to set up.</p>
+        <ul>
+          <li><b>Where it goes.</b> Into the app's area of your <em>private</em> iCloud database, which Apple runs. It is stored with your Apple Account, counts towards your iCloud storage, and is covered by Apple's iCloud terms and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>. I have no access to it: there is no server of mine in between, and the developer tools give me no way to read anyone's private iCloud data.</li>
+          <li><b>What syncs.</b> Your projects, photos, paints, recipes, stash and notes, plus your low-stock threshold. Photos are stored at up to 2048 pixels on their longest edge whether sync is on or not, and each device makes its own thumbnails. Your notification preferences and your analytics and crash-reporting choices stay separate on each device.</li>
+          <li><b>Turning it off.</b> Use <em>iCloud Sync</em> in Settings → iCloud. That device keeps all its data and stops sending or receiving changes, and the copy in iCloud stays as it was. Turn it back on and anything you changed in the meantime is sent.</li>
+          <li><b>Erasing the iCloud copy.</b> <em>Delete Data from iCloud…</em> in Settings → iCloud permanently deletes your data from iCloud — including the synced low-stock threshold — and from every other device syncing with that account. The device you do it on keeps its copy and has sync turned off.</li>
+          <li><b>Signing out of iCloud.</b> The app keeps working with everything still on the device, and sync picks up again when you sign back in.</li>
+        </ul>
       </section>
 
       <section id="sent">
         <h2>What is sent off your device</h2>
-        <p>Two things, both from Google's Firebase toolkit, and neither of which happens unless you agree to it. Nothing else in the app makes any network request at all.</p>
+        <p>Besides iCloud sync above — which only ever goes to your own iCloud — two things, both from Google's Firebase toolkit, and neither of which happens unless you agree to it. Nothing else in the app makes any network request at all.</p>
 
         <div class="notice">
           <p><strong>Nothing is sent unless you say yes.</strong> Both switches start off. The first time you open Mini Companion it asks you, once, whether you are willing to share anonymous usage data and crash reports — because the app is free, and that feedback is most of what tells me which parts are worth improving and which features are worth building next.</p>
@@ -256,7 +269,7 @@
           <p>You can change your mind either way, at any time, in <strong>Settings → Privacy</strong>. There are two independent switches — <em>Share Analytics</em> and <em>Send Crash Reports</em> — so you can allow one and refuse the other.</p>
         </div>
 
-        <p>What follows describes what each one sends <em>when it is switched on</em>. While it is off, none of it leaves your phone.</p>
+        <p>What follows describes what each one sends <em>when it is switched on</em>. While it is off, none of it leaves your device.</p>
 
         <h3>Usage analytics (Firebase Analytics)</h3>
         <p>This tells me which parts of the app actually get used, so I know what is worth improving. What it sends:</p>
@@ -326,15 +339,16 @@
         <h2>The third parties involved</h2>
         <div class="tbl">
           <div class="row"><div>Google (Firebase)</div><div>Receives the anonymous analytics and crash reports described above, and only while the corresponding switch is on. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase's privacy information</a> and <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</div></div>
-          <div class="row"><div>Apple</div><div>Distributes the app and, during the beta, handles TestFlight as described above. See <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</div></div>
+          <div class="row"><div>Apple</div><div>Distributes the app, holds your synced data in your private iCloud while sync is on — under your own Apple Account, with no access for me — and, during the beta, handles TestFlight as described above. See <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>.</div></div>
         </div>
         <p>That is the complete list. The app talks to no other service.</p>
+        <p>Buy links open the retailer's website, which has its own privacy policy. The app sends nothing itself: tapping Buy on the shopping list opens the shop's search page in Safari, with the paint's name in the address.</p>
       </section>
 
       <section id="retention">
         <h2>How long things are kept</h2>
         <ul>
-          <li><b>Your painting records</b> stay on your device until you delete them or delete the app. I never hold a copy, so I cannot delete them for you and cannot recover them for you either.</li>
+          <li><b>Your painting records</b> stay on your devices, and in your iCloud while sync is on, until you delete them. Deleting a record on one syncing device deletes it on the others; the iCloud copy as a whole stays until you erase it from Settings → iCloud. I never hold a copy, so I cannot delete them for you and cannot recover them for you either.</li>
           <li><b>Analytics</b> are retained by Firebase under Google's retention settings for this project, and are aggregated — they are not a record of an identifiable person.</li>
           <li><b>Crash reports</b> are kept by Crashlytics for as long as they are useful for diagnosing the bug, and are deleted on Google's own schedule.</li>
         </ul>
@@ -353,9 +367,10 @@
           <li><b>To start or stop the analytics</b>, use <em>Share Analytics</em> in Settings → Privacy.</li>
           <li><b>To start or stop the crash reports</b>, use <em>Send Crash Reports</em> in the same place.</li>
           <li><b>To stop the reminders</b>, turn them off in Settings → Notifications, or in iOS Settings.</li>
-          <li><b>To erase everything the app holds</b>, delete the app from your iPhone.</li>
+          <li><b>To stop syncing</b>, turn off <em>iCloud Sync</em> in Settings → iCloud.</li>
+          <li><b>To erase everything the app holds</b>, use <em>Delete Data from iCloud…</em> in Settings → iCloud, then delete the app from each of your devices.</li>
         </ul>
-        <p>If you are in the European Union, the United Kingdom or another place with data protection law of this kind, you have rights over your personal data — including access, correction, erasure and objection. Because the analytics and crash reporting are off until you switch them on, nothing is collected on the basis of anything other than your own consent, and withdrawing it is the same two switches. Two further honest notes: everything you create never leaves your device, so there is no copy for me to send you or delete; and the telemetry is not linked to your identity, so I have no way to find "your" records among it in order to act on a request. What I can do is answer any question about what the app does, and act on anything within reach. Write to <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20privacy">giuliano.galea@icloud.com</a> and you will get a reply.</p>
+        <p>If you are in the European Union, the United Kingdom or another place with data protection law of this kind, you have rights over your personal data — including access, correction, erasure and objection. Because the analytics and crash reporting are off until you switch them on, nothing is collected on the basis of anything other than your own consent, and withdrawing it is the same two switches. Two further honest notes: everything you create stays on your devices and in your own private iCloud, which I cannot access, so there is no copy for me to send you or delete — the controls above are how you erase it; and the telemetry is not linked to your identity, so I have no way to find "your" records among it in order to act on a request. What I can do is answer any question about what the app does, and act on anything within reach. Write to <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20privacy">giuliano.galea@icloud.com</a> and you will get a reply.</p>
       </section>
 
       <section id="changes">

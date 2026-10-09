@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mini Companion — the painting log for your miniatures</title>
-<meta name="description" content="Mini Companion tracks every miniature you paint: progress from sprue to finished, a photo log per stage, your paint inventory, your mixing recipes, your stash, and a shareable PDF at the end.">
+<meta name="description" content="Mini Companion tracks every miniature you paint: progress from sprue to finished, a photo log per stage, your paint inventory, your mixing recipes and painting schemes, your stash, and a shareable PDF at the end.">
 <meta name="theme-color" content="#14110F">
 <meta property="og:title" content="Mini Companion">
-<meta property="og:description" content="The painting log for your miniatures — progress, photos, paints, mixing recipes and stash, in one app.">
+<meta property="og:description" content="The painting log for your miniatures — progress, photos, paints, mixing recipes, painting schemes and stash, in one app.">
 <meta property="og:type" content="website">
 <link rel="icon" href="assets/app-icon.png">
 <link rel="apple-touch-icon" href="assets/app-icon.png">
@@ -156,7 +156,7 @@
 
   /* ---------- phone mockup ---------- */
   /* Mirrors the real Projects screen: ProjectsView's inset-grouped List of
-     ProjectRow, inside RootView's four-tab TabView. Sizes are iOS points
+     ProjectRow, inside RootView's five-tab TabView. Sizes are iOS points
      scaled by ~0.76 to fit a 300px-wide screen. */
   .phone-stage{display:flex; justify-content:center}
   .phone{
@@ -412,7 +412,7 @@
             <span style="background:#8B4A7A"></span>
           </div>
           <h1>Every miniature you paint,<br><span class="accent">properly logged.</span></h1>
-          <p class="lede">Mini Companion is an iPhone app for miniature painters. It tracks each model from sprue to finished, keeps a photo log of every stage, remembers which paints you own and which ones you used — and turns the whole thing into a PDF you can share when the model is done.</p>
+          <p class="lede">Mini Companion is an iPhone and iPad app for miniature painters. It tracks each model from sprue to finished, keeps a photo log of every stage, remembers which paints you own and which ones you used — and turns the whole thing into a PDF you can share when the model is done.</p>
           <div class="cta-row" id="download">
             <!-- The app is in open beta, not on the App Store. Set TESTFLIGHT_URL in
                  the script at the bottom of this file and both of these buttons upgrade
@@ -424,7 +424,7 @@
             </a>
             <a class="ghost-btn" href="#features">See what it does →</a>
           </div>
-          <p class="meta-line">In open beta through TestFlight · iPhone · iOS 18 or later · Free, no account, your data stays on device.</p>
+          <p class="meta-line">In open beta through TestFlight · iPhone and iPad · iOS 18 or later · Free, no account, syncs through your own iCloud.</p>
         </div>
 
         <div class="phone-stage">
@@ -531,6 +531,7 @@
                 <a><svg viewBox="0 0 24 24"><path d="M12 3.2c-4.9 0-8.8 3.5-8.8 8s3 7.4 6.5 7.4c1.2 0 1.8-.7 1.8-1.5 0-.5-.3-.8-.5-1.1-.3-.4-.5-.7-.5-1.2 0-.9.7-1.6 1.7-1.6h1.3c3.5 0 5.5-2.1 5.5-5 0-2.9-3-5-7-5z"/><circle cx="8.1" cy="11" r="1.15" fill="currentColor" stroke="none"/><circle cx="11.3" cy="7.9" r="1.15" fill="currentColor" stroke="none"/><circle cx="15.4" cy="9.1" r="1.15" fill="currentColor" stroke="none"/></svg>Paints</a>
                 <a class="on"><svg viewBox="0 0 24 24"><path d="M12 2.6 3.6 6.4 12 10.2l8.4-3.8z"/><path d="M3.6 11.6 12 15.4l8.4-3.8"/><path d="M3.6 16.8 12 20.6l8.4-3.8"/></svg>Projects</a>
                 <a><svg viewBox="0 0 24 24"><path d="M3.4 8.2 12 4.1l8.6 4.1v8.1L12 20.4l-8.6-4.1z"/><path d="M3.4 8.2 12 12.3l8.6-4.1M12 12.3v8.1"/></svg>Stash</a>
+                <a><svg viewBox="0 0 24 24"><path d="M5.6 3.6h5.2M6.4 3.6v12.6a1.8 1.8 0 0 0 3.6 0V3.6"/><path d="M13.2 3.6h5.2M14 3.6v12.6a1.8 1.8 0 0 0 3.6 0V3.6"/><path d="M6.4 10.4h3.6M14 8.4h3.6"/></svg>Recipes</a>
                 <a><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.9h0l1.6 1.7 2.2-.7 1 2.1 2.3.3-.2 2.3 1.9 1.3-1.2 2 1.2 2-1.9 1.3.2 2.3-2.3.3-1 2.1-2.2-.7L12 21.1l-1.6-1.7-2.2.7-1-2.1-2.3-.3.2-2.3-1.9-1.3 1.2-2-1.2-2 1.9-1.3-.2-2.3 2.3-.3 1-2.1 2.2.7z"/></svg>Settings</a>
               </div>
 
@@ -567,13 +568,19 @@
         <div class="feature reveal">
           <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2.2-.9 2.2-1.9 0-.6-.3-1-.6-1.4-.3-.4-.6-.8-.6-1.4 0-1 .8-1.8 1.9-1.8H16a5 5 0 0 0 5-5c0-3.6-4-6.5-9-6.5z"/><circle cx="8" cy="11" r="1.1" fill="currentColor" stroke="none"/><circle cx="11" cy="7.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/></svg></div>
           <h3>Your paint inventory</h3>
-          <p>Pick from a bundled catalogue of over 11,000 paints across 34 brands. Search by name or manufacturer code, filter the list down, track how full each pot is, and attach the exact paints you used to each project.</p>
+          <p>Pick from a bundled catalogue of over 11,000 paints across 34 brands. Search by name or manufacturer code, filter the list down, track how full each pot is, attach the exact paints you used to each project, and keep a shopping list of what is running low.</p>
         </div>
 
         <div class="feature reveal">
           <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9.4" cy="9.8" r="4.7"/><circle cx="14.6" cy="9.8" r="4.7"/><path d="M12 14.6c-1.7 1.9-2.6 3.4-2.6 4.5a2.6 2.6 0 0 0 5.2 0c0-1.1-.9-2.6-2.6-4.5z"/></svg></div>
           <h3>Recipes for your own mixes</h3>
-          <p>Write a mix down in parts — two Waaagh! Flesh, one Screaming Skull, one medium — and keep it next to the inventory that already knows which of those pots you own.</p>
+          <p>Write a mix down in parts — two Waaagh! Flesh, one Screaming Skull, one medium — from paints you own or ones still in the catalogue, and share it with a friend as a picture card they can open in the app.</p>
+        </div>
+
+        <div class="feature reveal">
+          <div class="icon"><svg viewBox="0 0 24 24"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><path d="M4.2 5.2l.9-.6v3.8M4 11.2a1.1 1.1 0 0 1 2 .6c0 .9-2 1.6-2 2.6h2.1M4 16.4a1.1 1.1 0 1 1 1.1 1.1 1.1 1.1 0 1 1-1.1 1.1"/></svg></div>
+          <h3>Painting schemes, step by step</h3>
+          <p>Basecoat, shade, layer, edge highlight. Save how you paint a surface once, attach it to any project, and tick the steps off as you go.</p>
         </div>
 
         <div class="feature reveal">
@@ -644,6 +651,7 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Search by <b>name or product code</b> — separators and spacing are ignored, so “XV-17” finds “XV17”.</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Filter by brand, set or ownership, right from the list.</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Attach paints to a project so the recipe survives the six months until you paint the second squad.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>A <b>shopping list</b> gathers the pots running low and the paints your planned recipes still need.</span></li>
           </ul>
         </div>
 
@@ -666,10 +674,11 @@
           <h2>The mix you got right once, written down</h2>
           <p class="lede">Every painter has a colour they nailed on a Sunday afternoon and could not reproduce a month later. A recipe is where that goes: a name, the ingredients in whole parts, and a swatch you dial in yourself while looking at the real thing on the palette.</p>
           <ul class="bullets">
-            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Built from the <b>paints you already own</b>, in parts — “2 : 1 : 1”, the way painters actually say it.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Built from <b>any paint in the catalogue</b>, owned or not, in parts — “2 : 1 : 1”, the way painters actually say it.</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Water, medium, flow improver, thinner and retarder can carry a ratio too.</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Every recipe is checked against your pots, so it can tell you <b>you are out of Screaming Skull</b> before you sit down.</span></li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span><b>Make Pot</b> promotes a mix into a real paint in your inventory once you have mixed a batch of it.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span><b>Share a recipe</b> as a picture card, with a file attached that another Mini Companion user can open to add the mix to theirs.</span></li>
           </ul>
           <p class="meta-line" style="margin-top:20px">The swatch is yours to set. The app never guesses a mixed colour from its ingredients — averaging hex codes models light, not paint, and it would be confidently wrong while you are looking at the real thing.</p>
         </div>
@@ -684,6 +693,33 @@
           <div class="strip">
             <b style="background:#3F6B3B"></b><b style="background:#E6E2B4"></b>
             <b style="background:#D9D2C8"></b><b style="background:#7A9450"></b>
+          </div>
+        </div>
+      </div>
+
+      <div class="split" style="margin-top:clamp(56px,7vw,96px)">
+        <div class="reveal">
+          <div class="eyebrow">Painting schemes</div>
+          <h2>How you paint it, step by step</h2>
+          <p class="lede">A mix is one colour. A scheme is the whole surface: the order you put the layers down in and what goes into each. Write it once, beside your mixes in the Recipes tab, and reuse it on every squad that needs it.</p>
+          <ul class="bullets">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Each step is a <b>technique</b> — basecoat, shade, layer, edge highlight, glaze, drybrush and more — with an optional note.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>A step uses a paint you own, one from the catalogue, <b>one of your mixes</b>, or nothing at all for the varnish.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Attach schemes to a project and <b>tick the steps off</b> as you paint. Progress is kept per project, so the same scheme can be half done on one squad and untouched on the next.</span></li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Attaching one offers to add its paints to the project, so pot usage can be recorded against them.</span></li>
+          </ul>
+        </div>
+
+        <div class="paper reveal" aria-hidden="true">
+          <div class="title">Ork Skin — on the Ork Nob Warband</div>
+          <div class="kv"><span>✓&nbsp; 1 · Basecoat</span><b>Waaagh! Flesh</b></div>
+          <div class="kv"><span>✓&nbsp; 2 · Shade / Wash</span><b>Biel-Tan Green</b></div>
+          <div class="kv"><span>○&nbsp; 3 · Layer</span><b>Ork Skin mix</b></div>
+          <div class="kv"><span>○&nbsp; 4 · Edge Highlight</span><b>Skarsnik Green</b></div>
+          <div class="kv" style="border-bottom:none"><span>Where were you?</span><b style="color:var(--teal)">2 of 4 steps done</b></div>
+          <div class="strip">
+            <b style="background:#1F5C40"></b><b style="background:#1B4B33"></b>
+            <b style="background:#6E8C3A"></b><b style="background:#8DA54E"></b>
           </div>
         </div>
       </div>
@@ -729,7 +765,7 @@
       <div class="faq reveal">
         <details>
           <summary>Where is my data kept?</summary>
-          <p>On your iPhone. Projects, photos, paints and stash entries all live in local storage on the device — there is no account to create and nothing is uploaded anywhere.</p>
+          <p>On your devices, and in your own private iCloud. Projects, photos, paints, recipes and stash entries live in local storage on each device and sync between your iPhone, iPad and Mac through your iCloud account — there is no account to create, no server of mine in between, and I cannot see any of it. Sync can be turned off in Settings, and the app works fully offline either way.</p>
         </details>
         <details>
           <summary>Does it cost anything?</summary>
@@ -745,7 +781,7 @@
         </details>
         <details>
           <summary>Does a recipe mean a full painting scheme?</summary>
-          <p>Not yet. A recipe is a <em>mix</em> — several paints and additives combined in ratios to make one colour. Step-by-step schemes (basecoat, wash, layer, edge highlight) are a separate idea and belong with projects; if that is what you want, say so.</p>
+          <p>It can be either. The Recipes tab holds <em>mixes</em> — several paints and additives combined in ratios to make one colour — and <em>schemes</em>, the steps for painting a surface (basecoat, wash, layer, edge highlight), each with its paint or mix and a note. Attach a scheme to a project and tick the steps off as you paint.</p>
         </details>
         <details>
           <summary>What if I paint a model out of order?</summary>
@@ -757,7 +793,7 @@
         </details>
         <details>
           <summary>Is there an iPad or Android version?</summary>
-          <p>Not today. It is an iPhone app. If there is demand for iPad, get in touch — that is the kind of thing worth hearing about.</p>
+          <p>iPad, yes — the same app runs on iPhone and iPad, and on Macs with Apple silicon as an iPad app, with your data kept in step through iCloud. There is no Android version.</p>
         </details>
       </div>
     </div>
