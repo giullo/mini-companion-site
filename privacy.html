@@ -206,12 +206,12 @@
     <div class="wrap">
       <div class="eyebrow">Privacy</div>
       <h1>What Mini Companion does with your data</h1>
-      <p class="updated">Last updated 5 October 2026 · applies to Mini Companion 1.0 for iPhone and iPad, currently distributed as an open beta through TestFlight.</p>
+      <p class="updated">Last updated 11 October 2026 · applies to Mini Companion 1.0 for iPhone and iPad, currently distributed as an open beta through TestFlight.</p>
 
       <div class="glance">
         <h2>The short version</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Everything you create — projects, photos, paints, recipes, stash, notes — <b>stays on your devices</b>, and syncs between them through <b>your own private iCloud</b>. There is no account to create and no server of mine to send it to, and I cannot see any of it.</span></li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Everything you create — projects, photos, paints, recipes, schemes, collections, stash, notes — <b>stays on your devices</b>, and syncs between them through <b>your own private iCloud</b>. There is no account to create and no server of mine to send it to, and I cannot see any of it.</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Anonymous <b>usage analytics and crash reports</b> can be sent to Google Firebase — but only if you turn them on. They are <b>off until you do</b>, and the app asks once, on first launch.</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>If you do turn them on, they carry screen names, counts and yes/no flags — <b>never</b> the names of your projects or paints, your notes, or your photos.</span></li>
           <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg><span>Nothing is sold, and nothing is used to advertise to you or to track you across other apps.</span></li>
@@ -235,10 +235,11 @@
           <li><b>Projects</b> — names, states, the full history of state changes and their dates.</li>
           <li><b>Photos</b> — every picture you attach to a project, plus the thumbnails generated from them.</li>
           <li><b>Paints</b> — your inventory, pot levels, and any custom paints you create from a recipe.</li>
-          <li><b>Recipes</b> — your mixes, their ingredients and ratios.</li>
+          <li><b>Recipes</b> — your mixes, their ingredients and ratios, and your painting schemes with their steps and per-project progress.</li>
           <li><b>Stash</b> — the models you have not started yet.</li>
+          <li><b>Collections</b> — their names and colours, and which projects and stash kits are in each.</li>
           <li><b>Notes</b> — anything you type anywhere in the app.</li>
-          <li><b>Settings</b> — your notification preferences, your low-stock threshold, and the two privacy choices below.</li>
+          <li><b>Settings</b> — your notification preferences, your low-stock threshold, your preferred shop for Buy links, and the two privacy choices below.</li>
         </ul>
         <p>Technically, on each device this lives in the app's own private storage: a database file and a photo folder inside the app's Application Support directory, which only Mini Companion can read. Apart from iCloud sync, described next, nothing there is uploaded, backed up to me, or shared with anyone.</p>
         <div class="notice calm">
@@ -249,10 +250,10 @@
       <section id="icloud">
         <h2>iCloud sync</h2>
         <p>Your data syncs through your private iCloud account and isn't accessible to the developer. You can turn sync off in Settings or erase the iCloud copy.</p>
-        <p>Sync keeps your projects, photos, paints, recipes, stash and notes the same on every iPhone, iPad and Mac signed into your Apple Account. It is on by default whenever you are signed into iCloud, and there is nothing to set up.</p>
+        <p>Sync keeps your projects, photos, paints, recipes, schemes, collections, stash and notes the same on every iPhone, iPad and Mac signed into your Apple Account. It is on by default whenever you are signed into iCloud, and there is nothing to set up.</p>
         <ul>
           <li><b>Where it goes.</b> Into the app's area of your <em>private</em> iCloud database, which Apple runs. It is stored with your Apple Account, counts towards your iCloud storage, and is covered by Apple's iCloud terms and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>. I have no access to it: there is no server of mine in between, and the developer tools give me no way to read anyone's private iCloud data.</li>
-          <li><b>What syncs.</b> Your projects, photos, paints, recipes, stash and notes, plus your low-stock threshold. Photos are stored at up to 2048 pixels on their longest edge whether sync is on or not, and each device makes its own thumbnails. Your notification preferences and your analytics and crash-reporting choices stay separate on each device.</li>
+          <li><b>What syncs.</b> Your projects, photos, paints, recipes, schemes, collections, stash and notes, plus your low-stock threshold. Photos are stored at up to 2048 pixels on their longest edge whether sync is on or not, and each device makes its own thumbnails. Your notification preferences, your preferred shop and your analytics and crash-reporting choices stay separate on each device.</li>
           <li><b>Turning it off.</b> Use <em>iCloud Sync</em> in Settings → iCloud. That device keeps all its data and stops sending or receiving changes, and the copy in iCloud stays as it was. Turn it back on and anything you changed in the meantime is sent.</li>
           <li><b>Erasing the iCloud copy.</b> <em>Delete Data from iCloud…</em> in Settings → iCloud permanently deletes your data from iCloud — including the synced low-stock threshold — and from every other device syncing with that account. The device you do it on keeps its copy and has sync turned off.</li>
           <li><b>Signing out of iCloud.</b> The app keeps working with everything still on the device, and sync picks up again when you sign back in.</li>
@@ -279,7 +280,7 @@
           <li><b>A Firebase app instance identifier</b>, generated by Firebase for this installation of the app. It is not your name, your email address, your Apple Account or your device's advertising identifier, and it is reset when analytics is switched off or the app is reinstalled.</li>
           <li><b>Standard device information</b> collected automatically by Firebase, such as device model, iOS version, language and country.</li>
         </ul>
-        <p>What it never sends: the name of any project, paint, recipe or stash item; any note or text you typed; any photo; or any count of your photos or your collection. This is a deliberate constraint on how the app is built, not a promise about intent — the events are defined so that there is no field for that information to travel in.</p>
+        <p>What it never sends: the name of any project, paint, recipe, scheme, collection or stash item; any note or text you typed; any photo; or any count of your photos or your collection. This is a deliberate constraint on how the app is built, not a promise about intent — the events are defined so that there is no field for that information to travel in.</p>
 
         <h3>Crash reports (Firebase Crashlytics)</h3>
         <p>When the app crashes, this sends me a report so the bug can be found and fixed. It contains the technical stack trace, the device model and iOS version, and a trail of the screens visited just beforehand. That trail is made of screen and route names and internal record identifiers — again, never the names of your projects or paints, your notes or your photos.</p>
