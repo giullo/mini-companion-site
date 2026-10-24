@@ -206,7 +206,7 @@
     <div class="wrap">
       <div class="eyebrow">Privacy</div>
       <h1>What Mini Companion does with your data</h1>
-      <p class="updated">Last updated 11 October 2026 · applies to Mini Companion 1.0 for iPhone and iPad, currently distributed as an open beta through TestFlight.</p>
+      <p class="updated">Last updated 24 October 2026 · applies to Mini Companion 1.0 for iPhone and iPad, available on the App Store.</p>
 
       <div class="glance">
         <h2>The short version</h2>
@@ -249,13 +249,13 @@
 
       <section id="icloud">
         <h2>iCloud sync</h2>
-        <p>Your data syncs through your private iCloud account and isn't accessible to the developer. You can turn sync off in Settings or erase the iCloud copy.</p>
+        <p>Your data syncs through your private iCloud account and isn't accessible to the developer. You can turn sync off in the app's Settings, and you can erase the iCloud copy from the iOS Settings app.</p>
         <p>Sync keeps your projects, photos, paints, recipes, schemes, collections, stash and notes the same on every iPhone, iPad and Mac signed into your Apple Account. It is on by default whenever you are signed into iCloud, and there is nothing to set up.</p>
         <ul>
           <li><b>Where it goes.</b> Into the app's area of your <em>private</em> iCloud database, which Apple runs. It is stored with your Apple Account, counts towards your iCloud storage, and is covered by Apple's iCloud terms and <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a>. I have no access to it: there is no server of mine in between, and the developer tools give me no way to read anyone's private iCloud data.</li>
           <li><b>What syncs.</b> Your projects, photos, paints, recipes, schemes, collections, stash and notes, plus your low-stock threshold. Photos are stored at up to 2048 pixels on their longest edge whether sync is on or not, and each device makes its own thumbnails. Your notification preferences, your preferred shop and your analytics and crash-reporting choices stay separate on each device.</li>
           <li><b>Turning it off.</b> Use <em>iCloud Sync</em> in Settings → iCloud. That device keeps all its data and stops sending or receiving changes, and the copy in iCloud stays as it was. Turn it back on and anything you changed in the meantime is sent.</li>
-          <li><b>Erasing the iCloud copy.</b> <em>Delete Data from iCloud…</em> in Settings → iCloud permanently deletes your data from iCloud — including the synced low-stock threshold — and from every other device syncing with that account. The device you do it on keeps its copy and has sync turned off.</li>
+          <li><b>Erasing the iCloud copy.</b> Open the iOS <em>Settings</em> app → your name → <em>iCloud</em> → <em>Manage Account Storage</em> → <em>Mini Companion</em>. That permanently deletes your data from iCloud — including the synced low-stock threshold — and, because the other devices sync with it, from them too. Export anything you want to keep before you do it.</li>
           <li><b>Signing out of iCloud.</b> The app keeps working with everything still on the device, and sync picks up again when you sign back in.</li>
         </ul>
       </section>
@@ -349,7 +349,7 @@
       <section id="retention">
         <h2>How long things are kept</h2>
         <ul>
-          <li><b>Your painting records</b> stay on your devices, and in your iCloud while sync is on, until you delete them. Deleting a record on one syncing device deletes it on the others; the iCloud copy as a whole stays until you erase it from Settings → iCloud. I never hold a copy, so I cannot delete them for you and cannot recover them for you either.</li>
+          <li><b>Your painting records</b> stay on your devices, and in your iCloud while sync is on, until you delete them. Deleting a record on one syncing device deletes it on the others; the iCloud copy as a whole stays until you erase it from the iOS Settings app. I never hold a copy, so I cannot delete them for you and cannot recover them for you either.</li>
           <li><b>Analytics</b> are retained by Firebase under Google's retention settings for this project, and are aggregated — they are not a record of an identifiable person.</li>
           <li><b>Crash reports</b> are kept by Crashlytics for as long as they are useful for diagnosing the bug, and are deleted on Google's own schedule.</li>
         </ul>
@@ -369,7 +369,7 @@
           <li><b>To start or stop the crash reports</b>, use <em>Send Crash Reports</em> in the same place.</li>
           <li><b>To stop the reminders</b>, turn them off in Settings → Notifications, or in iOS Settings.</li>
           <li><b>To stop syncing</b>, turn off <em>iCloud Sync</em> in Settings → iCloud.</li>
-          <li><b>To erase everything the app holds</b>, use <em>Delete Data from iCloud…</em> in Settings → iCloud, then delete the app from each of your devices.</li>
+          <li><b>To erase everything the app holds</b>, erase the iCloud copy from the iOS <em>Settings</em> app → your name → <em>iCloud</em> → <em>Manage Account Storage</em> → <em>Mini Companion</em>, then delete the app from each of your devices.</li>
         </ul>
         <p>If you are in the European Union, the United Kingdom or another place with data protection law of this kind, you have rights over your personal data — including access, correction, erasure and objection. Because the analytics and crash reporting are off until you switch them on, nothing is collected on the basis of anything other than your own consent, and withdrawing it is the same two switches. Two further honest notes: everything you create stays on your devices and in your own private iCloud, which I cannot access, so there is no copy for me to send you or delete — the controls above are how you erase it; and the telemetry is not linked to your identity, so I have no way to find "your" records among it in order to act on a request. What I can do is answer any question about what the app does, and act on anything within reach. Write to <a href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20privacy">giuliano.galea@icloud.com</a> and you will get a reply.</p>
       </section>

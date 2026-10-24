@@ -393,7 +393,7 @@
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="nav-cta" href="#download">Join the beta</a>
+    <a class="nav-cta" href="#download">Download</a>
   </div>
 </header>
 
@@ -414,17 +414,16 @@
           <h1>Every miniature you paint,<br><span class="accent">properly logged.</span></h1>
           <p class="lede">Mini Companion is an iPhone and iPad app for miniature painters. It tracks each model from sprue to finished, keeps a photo log of every stage, remembers which paints you own and which ones you used — and turns the whole thing into a PDF you can share when the model is done.</p>
           <div class="cta-row" id="download">
-            <!-- The app is in open beta, not on the App Store. Set TESTFLIGHT_URL in
-                 the script at the bottom of this file and both of these buttons upgrade
-                 themselves into real TestFlight links. Until then they say so rather
-                 than pointing at a page that does not exist. -->
-            <a class="appstore" data-beta-cta href="#contact" aria-label="The Mini Companion open beta link is coming shortly">
+            <!-- Shipped. Both CTAs are plain links to the App Store listing now; the
+                 script that used to rewrite them from a TestFlight placeholder is gone,
+                 so the URL lives in the markup rather than in JavaScript. -->
+            <a class="appstore" href="https://apps.apple.com/it/app/mini-companion/id6816378853" target="_blank" rel="noopener" aria-label="Download Mini Companion on the App Store">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 2.6 10.6 13.4"/><path d="M21.4 2.6 15 21.4l-4.4-8-8-4.4z"/></svg>
-              <span class="txt"><small>Open beta</small><strong>Link coming shortly</strong></span>
+              <span class="txt"><small>Download on the</small><strong>App Store</strong></span>
             </a>
             <a class="ghost-btn" href="#features">See what it does →</a>
           </div>
-          <p class="meta-line">In open beta through TestFlight · iPhone and iPad · iOS 18 or later · Free, no account, syncs through your own iCloud.</p>
+          <p class="meta-line">On the App Store · iPhone and iPad · iOS 18 or later · Free, no account, syncs through your own iCloud.</p>
         </div>
 
         <div class="phone-stage">
@@ -784,8 +783,8 @@
           <p>No. It is free, with no subscription and no in-app purchases — nothing in the app is gated behind a payment.</p>
         </details>
         <details>
-          <summary>Is it on the App Store yet?</summary>
-          <p>Not yet. It is in <strong>open beta</strong> through TestFlight, Apple's own beta distribution: install the free TestFlight app, open the beta link, and Mini Companion installs from there. Two things to know going in — beta builds expire after 90 days, so there will be the occasional update prompt, and you can send feedback straight from TestFlight by taking a screenshot inside the app. An App Store release follows once the beta has settled.</p>
+          <summary>Is it on the App Store?</summary>
+          <p>Yes. Mini Companion is <strong>on the App Store</strong>, free, for iPhone and iPad running iOS 18 or later. The open beta that ran through TestFlight is finished, so there are no expiring builds to keep updating any more — install it the ordinary way and it stays installed.</p>
         </details>
         <details>
           <summary>Can I add a paint that is not in the catalogue?</summary>
@@ -819,9 +818,9 @@
         <h2>Stop guessing what you primed last month</h2>
         <p class="lede">Mini Companion keeps the record so you can get back to the brush.</p>
         <div class="cta-row">
-          <a class="appstore" data-beta-cta href="mailto:giuliano.galea@icloud.com?subject=Mini%20Companion%20beta" aria-label="The Mini Companion open beta link is coming shortly">
+          <a class="appstore" href="https://apps.apple.com/it/app/mini-companion/id6816378853" target="_blank" rel="noopener" aria-label="Download Mini Companion on the App Store">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.4 2.6 10.6 13.4"/><path d="M21.4 2.6 15 21.4l-4.4-8-8-4.4z"/></svg>
-            <span class="txt"><small>Open beta</small><strong>Link coming shortly</strong></span>
+            <span class="txt"><small>Download on the</small><strong>App Store</strong></span>
           </a>
         </div>
         <div>
@@ -852,23 +851,9 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // The TestFlight public link. Empty until Beta App Review has passed — see
-  // docs/open-beta-release.md, Section 9. Filling it in is the whole of the second
-  // publish: both CTAs turn themselves from "link coming shortly" into real links,
-  // labels and all. Leave it empty rather than guessing the URL; a dead beta link on
-  // a public page is worse than an honest one that says "not yet".
-  const TESTFLIGHT_URL = 'https://testflight.apple.com/join/wkYRa8pb';
-
-  if (TESTFLIGHT_URL) {
-    document.querySelectorAll('[data-beta-cta]').forEach(a => {
-      a.href = TESTFLIGHT_URL;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.setAttribute('aria-label', 'Join the Mini Companion open beta on TestFlight');
-      a.querySelector('small').textContent = 'Join the open beta on';
-      a.querySelector('strong').textContent = 'TestFlight';
-    });
-  }
+  // The TestFlight placeholder and the script that rewrote the CTAs from it are
+  // gone: the app shipped, so both buttons are plain App Store links in the markup
+  // above. A link that works without JavaScript beats one assembled at runtime.
 
   // Border on the nav once the page has scrolled.
   const nav = document.getElementById('nav');
